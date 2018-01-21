@@ -1,4 +1,14 @@
 #!/bin/bash
+
+# create folder for config
+mkdir data
+cp sample-dhcpd.conf data/dhcpd.conf
+
+# interafce should be up and running
+INTERFACE=$1
+ifconfig $INTERFACE up
+ifconfig $INTERFACE "10.0.0.1"
+
 pushd $(dirname $0) >/dev/null
 data_dir="$(pwd)/data"
 docker run -ti --rm --net host -v "$data_dir":/data networkboot/dhcpd "$@"
